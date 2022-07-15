@@ -4,7 +4,7 @@ import { Input } from '@/componentes/Form/Inputs';
 import { MainLayout } from '@/componentes/Layout/MainLayout';
 import { RichTable } from '@/componentes/Layout/RichTable';
 import { useWalletFundsContext } from '@/context/WalletFundsContext';
-import { Asset, AssetEntity, Nft } from '@common/src/lib/api/entities';
+import { Asset, AssetEntity, AssetInformation, Nft } from '@common/src/lib/api/entities';
 import { retrying } from '@common/src/lib/net';
 import NetworkClient from '@common/src/services/NetworkClient';
 import { none, option, some } from '@octantis/option';
@@ -40,7 +40,7 @@ const net = Container.get(NetworkClient);
 export default function MyNftList({ account }: MyNftListProps) {
   const { register } = useForm();
   const [search, setSearch] = useState<string>('');
-  const [nfts, setNfts] = useState<Record<string, AssetEntity | Asset | Nft>>({});
+  const [nfts, setNfts] = useState<Record<string, AssetInformation>>({});
   const [info, setInfo] = useState('');
 
   useEffect(() => {
@@ -59,44 +59,45 @@ export default function MyNftList({ account }: MyNftListProps) {
       }
       setNfts(
         res.data.assets.reduce((map, asset) => {
-          map[getId(asset)] = asset;
+          map[asset.id] = asset;
           return map;
-        }, {} as Record<string, Asset | AssetEntity>)
+        }, {} as Record<string, AssetInformation>)
       );
+      console.log(res.data);
     })();
   }, []);
 
-  useEffect(() => {
-    const size = Object.keys(nfts).length;
-    if (size === 0) return;
-    const pending = [...Object.values(nfts)].filter((s) => isAsset(s)) as Asset[];
-    setInfo(`Loaded ${size - pending.length} out of ${size} total assets...`);
-    if (pending.length === 0) {
-      setInfo(`Done! All assets loaded!`);
-      setTimeout(() => {
-        setInfo('');
-      }, 3000);
-    } else {
-      const ad = pending.pop();
-      if (!ad) {
-        throw new Error(`Invalid data payload! This shouldn't be happening!`);
-      }
-      const id = ad['asset-id'].toString();
-      if (id == null) {
-        throw new Error(`Invalid data payload! This shouldn't be happening!`);
-      }
-      (async () => {
-        console.info(`Fetching asset ${id}...`);
-        const res = await retrying(
-          net.core.get(`asset/:id`, {
-            params: { id },
-          }),
-          10
-        );
-        setNfts({ ...nfts, [res.data.value.id.toString()]: res.data.value });
-      })();
-    }
-  }, [nfts]);
+  // useEffect(() => {
+  //   const size = Object.keys(nfts).length;
+  //   if (size === 0) return;
+  //   const pending = [...Object.values(nfts)].filter((s) => isAsset(s)) as Asset[];
+  //   setInfo(`Loaded ${size - pending.length} out of ${size} total assets...`);
+  //   if (pending.length === 0) {
+  //     setInfo(`Done! All assets loaded!`);
+  //     setTimeout(() => {
+  //       setInfo('');
+  //     }, 3000);
+  //   } else {
+  //     const ad = pending.pop();
+  //     if (!ad) {
+  //       throw new Error(`Invalid data payload! This shouldn't be happening!`);
+  //     }
+  //     const id = ad['asset-id'].toString();
+  //     if (id == null) {
+  //       throw new Error(`Invalid data payload! This shouldn't be happening!`);
+  //     }
+  //     (async () => {
+  //       console.info(`Fetching asset ${id}...`);
+  //       const res = await retrying(
+  //         net.core.get(`asset/:id`, {
+  //           params: { id },
+  //         }),
+  //         10
+  //       );
+  //       setNfts({ ...nfts, [res.data.value.id.toString()]: res.data.value });
+  //     })();
+  //   }
+  // }, [nfts]);
 
   const handleSearch = (e: any) => {
     e.preventDefault();
@@ -187,7 +188,7 @@ export default function MyNftList({ account }: MyNftListProps) {
                     </div>
                   </div>
                 </div>
-                <RichTable
+                {/* <RichTable
                   order={['name', 'price', 'date', 'status']}
                   header={{
                     name: 'NFT Name',
@@ -250,7 +251,7 @@ export default function MyNftList({ account }: MyNftListProps) {
                         };
                       }
                     })}
-                />
+                /> */}
               </div>
             </div>
           </TransactionFrame>
