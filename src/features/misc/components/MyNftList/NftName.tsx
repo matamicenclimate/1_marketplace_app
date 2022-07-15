@@ -19,7 +19,7 @@ export default function NftName({ title, id, className, thumbnail }: NftNameProp
         &nbsp;
       </div>
       <div className="flex flex-col">
-        <p className="truncate max-w-[80px]">{title}</p>
+        <p className="truncate text-climate-black font-semibold text-base">{title}</p>
         <div className="text-climate-gray-light">
           <a target="_blank" rel="noreferrer" href={`https://testnet.algoexplorer.io/asset/${id}`}>
             #{id}

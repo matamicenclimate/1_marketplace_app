@@ -11,6 +11,7 @@ import Tabs from '../Tabs/Tabs';
 import { AssetEntity, Nft, NftAssetInfo } from '@common/src/lib/api/entities';
 import NetworkClient from '@common/src/services/NetworkClient';
 import Container from 'typedi';
+import NftView from './NftView';
 
 export interface NftStatusProps {
   onEdit?: () => void;
@@ -67,7 +68,10 @@ export default function NftStatus({
 
   const disableButton = () => {
     // TODO El estado debe ser correcto y no mirar el isClosed
-    if ((assetInfo?.assetInfo.type === 'direct-listing' || assetInfo?.assetInfo.type === 'auction') && !assetInfo?.assetInfo.isClosed) {
+    if (
+      (assetInfo?.assetInfo.type === 'direct-listing' || assetInfo?.assetInfo.type === 'auction') &&
+      !assetInfo?.assetInfo.isClosed
+    ) {
       return setDisabled(true);
     }
     return disabled as boolean;
@@ -89,6 +93,7 @@ export default function NftStatus({
           'Not Listed'
         )}
       </div>
+      <NftView assetId={assetId} />
       <div>
         <span
           onClick={handleDropdown}

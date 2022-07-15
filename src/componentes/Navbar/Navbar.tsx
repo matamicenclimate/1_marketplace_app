@@ -3,7 +3,7 @@ import { useWalletFundsContext } from '@/context/WalletFundsContext';
 import { Link, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import { Tab } from '../Layout/Tab';
-import climateTradeLogo from '../../assets/climateTradeLogo.svg';
+import climateTradeLogo from '../../assets/icons/climatradeWhite.svg';
 import heroImg from '../../assets/heroImg.jpg';
 import { AlgoWalletConnector } from '../Wallet/AlgoWalletConnector';
 import BalanceDisplay from '../Layout/BalanceDisplay';
@@ -35,7 +35,7 @@ export const Navbar = ({ nft }: NavbarPropsType) => {
         }}
       >
         <ul className="w-full flex justify-evenly items-start">
-          <li className="">
+          <li className="flex items-center mt-6">
             <Link to="/">
               <img src={climateTradeLogo} alt="climateTradeLogo" />
             </Link>

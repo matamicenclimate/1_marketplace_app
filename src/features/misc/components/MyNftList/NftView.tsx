@@ -1,10 +1,25 @@
-import { Button } from '@/componentes/Elements/Button/Button';
+import ChevronRight from '@/componentes/Arrows/ChevronRight';
+import { Link } from 'react-router-dom';
 
-const NftView = () => {
+type NftViewProps = {
+  assetId: number;
+};
+
+const NftView = ({ assetId }: NftViewProps) => {
   return (
-    <div>
-      <Button>View NFT </Button>
-    </div>
+    <>
+      <Link to={`/my-nfts/${assetId}`}>
+        <div className="flex flex-col mx-8">
+          <p className="text-xs bg-climate-yellow w-[120px]">
+            (TODO: fetch correct Nft either from database if listed or from blockchain)
+          </p>
+          <div className="flex border border-climate-yellow">
+            <p>View NFT</p>
+            <ChevronRight />
+          </div>
+        </div>
+      </Link>
+    </>
   );
 };
 
