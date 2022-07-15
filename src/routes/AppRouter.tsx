@@ -7,6 +7,7 @@ import MyNftList from '@/features/misc/routes/MyNftList';
 import { RequiresWallet } from '@/componentes/Wallet/RequiresWallet';
 import Causes from '@/features/misc/routes/Causes';
 import CheckoutPage from '@/features/misc/routes/CheckoutPage';
+import MyNftDetail from '@/features/misc/routes/MyNftDetail';
 
 export const AppRouter = () => {
   const element = useRoutes([
@@ -18,6 +19,10 @@ export const AppRouter = () => {
     {
       path: '/nft/:ipnft',
       element: <NftDetail />,
+    },
+    {
+      path: '/my-nfts/:id',
+      element: <MyNftDetail />,
     },
     {
       path: '/checkout',

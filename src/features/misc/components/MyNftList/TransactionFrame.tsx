@@ -4,7 +4,7 @@ export function TransactionFrame({
   ...props
 }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
   return (
-    <div className={`w-[70%] pl-10 ${className ?? ''}`.trim()} {...props}>
+    <div className={`w-[70%] ${className ?? ''}`.trim()} {...props}>
       {children}
     </div>
   );

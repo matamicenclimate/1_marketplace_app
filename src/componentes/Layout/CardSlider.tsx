@@ -3,7 +3,7 @@ import { Listing } from '@common/src/lib/api/entities';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import ChevronLeft from '../Arrows/ChevronLeft';
+import ChevronRight from '../Arrows/ChevronRight';
 import { Card } from '../Elements/Card/Card';
 
 type CardSliderProps = {
@@ -57,7 +57,7 @@ const CardSlider = ({ nftList, causes }: CardSliderProps) => {
               <h3 className="font-semibold text-2xl mb-5">{value.cause}</h3>
               <div className="flex font-normal text-base text-climate-light-gray">
                 <p>{value.arrayNft?.length} NFTs</p>
-                <ChevronLeft />
+                <ChevronRight />
               </div>
             </div>
             <div className="flex gap-5">
